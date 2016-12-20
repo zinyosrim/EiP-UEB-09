@@ -107,7 +107,7 @@ public class Seminarraum {
 			System.out.println();
 			System.out.println();
 		
-			return String.format("Name des Seminarraums ist "+this.getClass().getName()+" mit "+this.anzahlStuehle+" und einer Maximalkapazität von "+this.MAX_STUEHLE );
+			return String.format("Der Seminarraum hat eine Anzahl von "+this.anzahlStuehle+" Stühlen bei einer Maximalkapazität von "+this.MAX_STUEHLE );
 	}			
 
 }
