@@ -1,90 +1,74 @@
+import java.util.Scanner;
 
 public class XmasTree {
 	
 	// Attribute
-	
-	private final String TREETOPPER = "*";
-	private final String TRUNK = "[_]";
-	private int level = 0;
-	
-	// Konstruktor
-	
-	public XmasTree (int level){
-		this.level = level;	
-	}
-	
+	protected final String TreeTopper = "*";
+	protected final String Trunk = "[_]";
+	protected int level = 0;
 
 	
-	public String spitze(){
-		String str = "";
-		for (int i = 0 ; i < this.level+1; i++){
-			str = str + " ";
-		}
-		return str + TREETOPPER + '\n';
-		
+	// Konstruktor
+	public XmasTree(int level) {
+		this.level = level;
 	}
 	
-	public String stamm(){
-		String str = "";
-		for (int i = 0 ; i < this.level; i++){
-			str = str + "^";
+	public String getTreeTopper(int level) {
+		String space = " ";
+		for(int i = 0; i < level; i++) {
+			space += " ";
 		}
-		return str + TRUNK + str;
-		
+		return space + TreeTopper + "\n";
 	}
 	
-	public String levelZeileOben(int y){
-		String str = "";
-		for (int x = 1 ; x < this.level+y; x++){
-			str = str + " ";
-		}
-		str = str + "/";
-		for (int x = 0 ; x < this.level-2*y; x++ ){
-			if ( x%2!=0 ){ 
-				str = str + "," ; 
+	public String getBody(int level) {
+		int currentlevel = 0;
+		int sublevel = 0;
+		String body = "";
+		for (int k = 0; k < level; k++) {
+			for (int j = 0; j < 2; j++) {
+				for(int i = 0; i < level - currentlevel - sublevel; i++) {
+					body += " ";
+				}
+				body += "/";
+				for(int i = 0; i < 2*currentlevel + 2*sublevel + 1; i++) {
+					body += (i%2 == sublevel ? "." : ",");
+				}
+				body += "\\\n";
+				sublevel = (sublevel%2 == 0 ? 1 : 0);
 			}
-			else { 
-				str = str + "." ;
-			}
+			currentlevel++;
 		}
-		return (str + (char)92);
-		
+		return body;
 	}
 	
-	public String levelZeileUnten(int y){
-		String str = "";
-		for (int x = 1 ; x < this.level-y+y; x++){
-			str = str + " ";
+	public String getTrunk(int level) {
+		String bottom = "";
+		for(int i = 0; i < level; i++) {
+			bottom += "^";
 		}
-		str = str + "/";
-		for (int x = 0 ; x < this.level-2*y; x++ ){
-			if ( x%2!=0 ){ 
-				str = str + "," ; 
-			}
-			else { 
-				str = str + "." ;
-			}
-		}
-		return (str + (char)92);
-		
+		return bottom + Trunk + bottom;
 	}
 	
-	public String toString(){
-		String str = this.spitze() + '\n';
-		for (int y = this.level; y > 0; y--){
-			str = levelZeileOben(y) + (char)10 + levelZeileUnten(y) + (char)10;
-		}
-		return str;
+	public String toString() {
+		String Tree = getTreeTopper(this.level) + getBody(this.level) + getTrunk(this.level);
+		return Tree;
 	}
-	
 	
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		XmasTree tannenbaum = new XmasTree(5);
+		
+		System.out.println("Wie viele Level soll der Weihnachtsbaum haben?");
+		
+		Scanner sc = new Scanner(System.in);
+	    int level = sc.nextInt();
+	    sc.close();
+		
+		System.out.println("Hier ist dein Weihnachtsbaum mit " + level + " Level");
+		
+		XmasTree T1 = new XmasTree(level);
+		System.out.println(T1.toString());
 
-		System.out.println(tannenbaum.toString());
-		System.out.println(tannenbaum.stamm());
 	}
 
 }
