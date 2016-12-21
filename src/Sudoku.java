@@ -27,52 +27,25 @@ public class Sudoku {
 
 	
 	// Aufgabe 9-4-(h)
-	public Sudoku(){
-		feld = new int[9][9];
-		int[] randRow = randomRow();
-
-		for (int x=0; x<9; x++){
-			feld[x][0] = randRow[x];
-		}
-		for (int x=0; x<9; x++){
-			feld[x][1] = randRow[(x+3)%9];
-		}
-		for (int x=0; x<9; x++){
-			feld[x][2] = randRow[(x+6)%9];
-		}
-		for (int x=0; x<9; x++){
-			feld[x][3] = randRow[(x+1)%9];
-		}
-		for (int x=0; x<9; x++){
-			feld[x][4] = randRow[(x+4)%9];
-		}
-		for (int x=0; x<9; x++){
-			feld[x][5] = randRow[(x+7)%9];
-		}
-		for (int x=0; x<9; x++){
-			feld[x][6] = randRow[(x+2)%9];
-		}
-		for (int x=0; x<9; x++){
-			feld[x][7] = randRow[(x+5)%9];
-		}
-		for (int x=0; x<9; x++){
-			feld[x][8] = randRow[(x+8)%9];
-		}
-		
-		
-	}
-	
 	/**
 	 * Erzeugt eine Startbelegung und wendet auf diese n Permutationen an
 	 * @param anzahlPermutationen
 	 */
 	public Sudoku(int anzahlPermutationen){
 		feld = new int[9][9];
-		for (int y=0; y<9; y++ ){
+		// erzeuge randomisierte 1. Zeile
+		int[] randRow = this.randomRow();
+		// erzeuge Sudoku Feld
+		int a=0;
+		int b=0;
+		for (int y=0; y<9; y++){
 			for (int x=0; x<9; x++){
-				feld[x][y] =  (( 3*y + y/3 + x )%9 + 1) ;
+				feld[x][y] = randRow[(x+3*a+b)%9];
 			}
+			a++; if ((y+1)%3==0) {a=0;b++;}
+
 		}
+		// wende Permutationen an	
 		for (int i=0; i<anzahlPermutationen; i++ ){
 			randomPermutation(anzahlPermutationen);
 			}	
@@ -86,24 +59,47 @@ public class Sudoku {
 	 * @return	Zufallszahlenarray[9]
 	 */
 	private int[] randomRow(){
-		int[] randomRow = {1,2,3,4,5,6,7,8,9};
-		Random randomAnzahlSwap = new Random();
+		// ruft die nächste Methode aufm die ein Random Array mit 9 Werten erstellt
+		return randomArray(9,1);
+		
+	}
+	/**
+	 * Hilfsmethode, erzeugt ein randomArray der Größe size mit Randomwerten
+	 * Hierbei sind Randomwerte lückenlos, 
+	 * also bei (4,1) 4,2,1,3 aber nicht 4,0,1,2
+	 * @param size			Größe des Random-Arrays
+	 * @param startValue	Startwert, z.B. 0 oder 1
+	 * @return				Array mit Randomwerten der Größe size
+	 */
+	private int[] randomArray(int size, int startValue){
+		// Index Array n Randomzahlen wird zunächst mit n Zahlen ab Startwert aufgefüllt und 
+		// im weiteren Schritt durch eine hohe Anzahl von Vertauschungen randomisiert
+		int[] randArray = new int[size];
+		// Indizes der zu vertauschenden Werte
 		Random randomIndex1 = new Random();
 		Random randomIndex2 = new Random();
-		int temp;
+		// Variable für Anzahl der Vertauschungen, um ein Zufallszahlenarray zu erzeugen
+		Random randomAnzahlSwap = new Random();
+		
+		// Initialisiere das Array mit den Zahlen 0..size-1
+		for (int i=0; i<size; i++){randArray[i]=i+startValue;}
+		
+		// führe bis zu 20000 zufällige Vertauschungen im obigen Array durch
 		int i1;
 		int i2;
-		// führe bis zu 200 zufällige Vertauschungen im Array durch
-		for (int i = 0; i < randomAnzahlSwap.nextInt(200); i++ ){
+		int temp;
+		
+		for (int i = 0; i < randomAnzahlSwap.nextInt(20000); i++ ){
 			// erzeuge zwei zufällige Indizes i1 und i2
-			i1 = randomIndex1.nextInt(9);
-			i2 = randomIndex2.nextInt(9);
+			i1 = randomIndex1.nextInt(size);
+			i2 = randomIndex2.nextInt(size);
 			// vertausche die jeweiligen Werte im Array
-			temp = randomRow[i1];
-			randomRow[i1] = randomRow[i2];
-			randomRow[i2] = temp;
-		}
-		return randomRow;
+			temp = randArray[i1];
+			randArray[i1] = randArray[i2];
+			randArray[i2] = temp;
+
+		}		
+		return randArray;		
 	}
 	
 	// Aufgabe 9-4-(b)
@@ -141,19 +137,39 @@ public class Sudoku {
 	private String printSudokuRow(int lineNo){
 		String str = "|";
 		for (int x=0; x<3; x++){
-			str = str + " " + (this.feld[x][lineNo] == 0 ? 0 : this.feld[x][lineNo]);
+			str = str + " " + (this.feld[x][lineNo] == 0 ? " " : this.feld[x][lineNo]);
 		}
 		str = str + " " + "|"; 
 		for (int x=3; x<6; x++){
-			str = str + " " + (this.feld[x][lineNo] == 0 ? 0 : this.feld[x][lineNo]);
+			str = str + " " + (this.feld[x][lineNo] == 0 ? " " : this.feld[x][lineNo]);
 		}
 		str = str + " " + "|"; 
 		for (int x=6; x<9; x++){
-			str = str + " " + (this.feld[x][lineNo] == 0 ? 0 : this.feld[x][lineNo]);
+			str = str + " " + (this.feld[x][lineNo] == 0 ? " " : this.feld[x][lineNo]);
 		}
 		str = str + " " + "|" + "\n";
 		return str;
 	}
+	
+//	public String getValue(int x, int y) {
+//		int n = this.feld[x][y];
+//		return (n != 0 ? n + "" : "");
+//	}
+//	
+//	public String toString() {
+//		String horizontalborder = "-------------------------\n";
+//		String board = "";
+//		for(int i = 0; i < 9; i++) {
+//			board += (i%3 == 0 ? horizontalborder + "| ": "| ");
+//			for(int j = 0; j < 9; j++) {
+//				board += getValue(i, j) + " " + (j%3 == 2 ? "| " : "");
+//			}
+//			board += "\n";
+//			
+//		}
+//		return board + horizontalborder;
+//	}
+	
 	
 	// Aufgabe 9-4-(c)
 	/**
@@ -359,41 +375,24 @@ public class Sudoku {
 		}		
 	}
 	
-	
-	//public void hide
-//	public String hide(int anzahlElemente){
-//		int[] tempArray = new int[81];
-//		int[] hideArray = new int[anzahlElemente];
-//		for (i=0; i<81;i++){
-//			hideArray[i]=i+1;
-//		}
-//		
-//		
-//		
-//		return;
-//	}
-	
-	public static int[] randomRow2(int n){
-		int[] randomRow = new int[81];
-		Random randomAnzahlSwap = new Random();
-		Random randomIndex1 = new Random();
-		Random randomIndex2 = new Random();
-		int temp;
-		int i1;
-		int i2;
-		for (int i=0;i<81;i++){
-			randomRow[i]=i;
+	// Aufgabe 9-4 (i)
+	/**
+	 * Erzeugt n Leerstellen im Sudoku und gibt dass Array als String aus
+	 * @param 	numberOfHides Anzahl Leerstellen
+	 * @return	String Darstellung des Susoku
+	 */
+	public String hide(int numberOfHides){
+		int[] hideIndex = randomArray(81,0);
+		// fülle die Stellen der Random Indizes mit 0
+		for (int i=0; i<numberOfHides;i++ ){
+			this.feld[hideIndex[i]%9][hideIndex[i]/9]  = 0;
 		}
-		// führe bis zu 20000 zufällige Vertauschungen im Array durch
-		for (int i = 0; i < randomAnzahlSwap.nextInt(20000); i++ ){
-			// erzeuge zwei zufällige Indizes i1 und i2
-			i1 = randomIndex1.nextInt(81);
-			i2 = randomIndex2.nextInt(81);
-			// vertausche die jeweiligen Werte im Array
-			temp = randomRow[i1];
-			randomRow[i1] = randomRow[i2];
-			randomRow[i2] = temp;
-		}
-		return randomRow;
+		return this.toString();
+	}
+	
+	public static void main(String[] args) {
+		Sudoku mySudoku = new Sudoku(5000);		
+ 		mySudoku.hide(50);
+		System.out.println(mySudoku);
 	}
 }
