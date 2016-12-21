@@ -1,9 +1,16 @@
 
 public class Vektor {
 	
+	//Attribute
+	
 	private Integer[] v;
 
 	
+	//Konstruktoren
+	
+	/** Erzeugt einen Array der Länge size mit 0
+	 * @param size	Länge des Arrays
+	 */
 	public Vektor(int size) {
 		v = new Integer[size];
 		for(int i = 0; i < size; i++) {
@@ -12,6 +19,10 @@ public class Vektor {
 	}
 	
 	
+	/** Erzeugt ein Array mit Länge size und füllt ihn mit dem Wert value
+	 * @param size	Länge des Arrays
+	 * @param value	Wert aller Elemente
+	 */
 	public Vektor(int size, Integer value) {
 		v = new Integer[size];
 		for(int i = 0; i < size; i++) {
@@ -20,6 +31,10 @@ public class Vektor {
 	}
 
 	
+	/** Gibt das Element an der Stelle position des Arrays zurück
+	 * @param position	gewünschte Stelle 
+	 * @return	Element der gewünschten Stelle
+	 */
 	public Integer getElement(int position) {
 		try {
 			return this.v[position];
@@ -30,11 +45,18 @@ public class Vektor {
 	}
 	
 	
+	/** Gibt die Länge des Arrays zurück
+	 * @return	Länge des Arrays
+	 */
 	public int getDimension() {
 		return this.v.length;
 	}
 	
 	
+	/** Überschreibt das Element an der Stelle position mit dem Wert value
+	 * @param position	gewünschte Stelle
+	 * @param value	gewünschter Wert
+	 */
 	public void setElement(int position, Integer value) {
 		try {
 			this.v[position] = value;
@@ -43,6 +65,10 @@ public class Vektor {
 	}
 	
 	
+	/** Vergleicht zwei Arrays bezüglich ihrer Elemente
+	 * @param other	Vergleichsarray
+	 * @return ArraysAreEqual	Boolscher Wert, ob Gleichheit vorliegt
+	 */
 	public boolean istGleich(Vektor other) {
 		int dthis = this.getDimension();
 		if(dthis != other.getDimension()) {
@@ -58,6 +84,10 @@ public class Vektor {
 	}
 	
 	
+	/** Sucht im Array nach dem Wert k und gibt dessen kleinste Stelle zurück
+	 * @param k gesuchter Wert
+	 * @return kleinste Stelle
+	 */
 	public Integer enthaelt(int k) {
 		int length = this.getDimension();
 		for(int i = 0; i < length; i++) {
@@ -69,16 +99,15 @@ public class Vektor {
 		return null;
 	}
 	
-	
+	/** Gibt den Array als String aus
+	 * @return String des Arrays
+	 */
 	public String toString() {
 		String array = "[";
 		if(this.v != null) {
 			int length = this.getDimension();
 			for(int i = 0; i < length; i++) {
-				array += this.getElement(i);
-				if(i != length - 1) {
-					array += " ";
-				}
+				array += this.getElement(i) + (i != length - 1 ? " " : "");
 			}
 		}
 		array += "]";
@@ -86,6 +115,10 @@ public class Vektor {
 	}
 	
 	
+	/** Addiert die Elemente von gleichen Stellen
+	 * @param other Summandarray
+	 * @return	Addierter Array
+	 */
 	public Vektor addiere(Vektor other) {
 		int dthis = this.getDimension();
 		if(dthis != other.getDimension()) {
@@ -99,6 +132,10 @@ public class Vektor {
 	}
 	
 	
+	/** Berechnet das Skalarprodukt zweier Arrays
+	 * @param other	zweiter Array
+	 * @return	Skalarprodukt der Eingangsarrays
+	 */
 	public Integer skalarprodukt(Vektor other) {
 		int dthis = this.getDimension();
 		if(dthis != other.getDimension()) {
@@ -115,11 +152,11 @@ public class Vektor {
 	
 	public static void main(String[] args) {
 		
-		Vektor v0 = new Vektor(0);
-		Vektor v1 = new Vektor(5);
-		Vektor v2 = new Vektor(5, 2);
-		Vektor v3 = new Vektor(5, 3);
-		Vektor v4 = new Vektor(2, 5);
+//		Vektor v0 = new Vektor(0);
+//		Vektor v1 = new Vektor(5);
+//		Vektor v2 = new Vektor(5, 2);
+//		Vektor v3 = new Vektor(5, 3);
+//		Vektor v4 = new Vektor(2, 5);
 		
 //		System.out.println(v0.toString());
 //		System.out.println(v3.addiere(v4));
@@ -150,7 +187,8 @@ public class Vektor {
 //		System.out.println("vek4: "+vek4.toString());
 //		
 //		Vektor vek5 = new Vektor(0);
-//		System.out.println("vek5: "+vek5.toString());
+//		Vektor vek5 = null;
+//		System.out.println("vek5: "+ vek5.toString());
 //		
 //		System.out.println();
 //
@@ -162,7 +200,6 @@ public class Vektor {
 //		if (vek0.addiere(vek3) == null) System.out.println("nullinger");
 //		System.out.println("vek0 + vek3: "+ vek0.addiere(vek3).toString());
 //		System.out.println("Skalarprodukt von vek0 und vek2: "+ vek0.skalarprodukt(vek2));
-
 		
 		
 	}

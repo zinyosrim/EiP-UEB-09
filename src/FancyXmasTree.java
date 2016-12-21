@@ -3,11 +3,15 @@ import java.util.Scanner;
 public class FancyXmasTree extends XmasTree {
 	
 	// Konstruktor
+	
 	public FancyXmasTree(int level) {
 		super(level);
 	}
 
-
+	/** Gibt die Baumspitze als String zurück
+	 * @param level	Größe des Baumes
+	 * @return	textuelle Darstellung der Spitze
+	 */
 	public String getTreeTopper(int level) {
 		String space = " ";
 		for(int i = 0; i < level; i++) {

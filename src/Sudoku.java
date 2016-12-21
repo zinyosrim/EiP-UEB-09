@@ -102,60 +102,21 @@ public class Sudoku {
 		return randArray;		
 	}
 	
-	// Aufgabe 9-4-(b)
+
 	/**
-	 * Wandelt eine Sudoku Belegung in ein String um. 
-	 * Ausgabe z.B. über System.out.println(mySudoku.toString());
-	 */
-//	public String toString(){
-//		this.outputStr = 	this.horizontalLine() +
-//							this.printSudokuRow(0)+this.printSudokuRow(1)+this.printSudokuRow(2)+
-//							this.horizontalLine()+
-//							this.printSudokuRow(3)+this.printSudokuRow(4)+this.printSudokuRow(5)+
-//							this.horizontalLine()+
-//							this.printSudokuRow(6)+this.printSudokuRow(7)+this.printSudokuRow(8)+
-//							this.horizontalLine();
-//		return this.outputStr;
-//		
-//	}
-//	
-//	/**
-//	 * Hilfsmethode für toString(). Erzeugt die Kopf-/Fuss-/Trennlinie.
-//	 * @return	Trennlinie als String
-//	 */
-//	private String horizontalLine(){
-//		return ("- - - - - - - - - - - - - "+ "\n" );
-//	}
-//	
-//	/**
-//	 * Hilfsmethode für toString(). 
-//	 * Erzeugt eine Zeilenausgabe als String für eine vorgegebene Zeile des Sudoku
-//	 * incl. den Abgrenzungen für die 3x3 Felder  
-//	 * @param 	lineNo
-//	 * @return 	Ausgabe einer Zeile in ein String
-//	 */
-//	private String printSudokuRow(int lineNo){
-//		String str = "|";
-//		for (int x=0; x<3; x++){
-//			str = str + " " + (this.feld[x][lineNo] == 0 ? " " : this.feld[x][lineNo]);
-//		}
-//		str = str + " " + "|"; 
-//		for (int x=3; x<6; x++){
-//			str = str + " " + (this.feld[x][lineNo] == 0 ? " " : this.feld[x][lineNo]);
-//		}
-//		str = str + " " + "|"; 
-//		for (int x=6; x<9; x++){
-//			str = str + " " + (this.feld[x][lineNo] == 0 ? " " : this.feld[x][lineNo]);
-//		}
-//		str = str + " " + "|" + "\n";
-//		return str;
-//	}
-	
+	 * Hilfsmethode für toString
+	 * 
+	 */	
 	public String getValue(int x, int y) {
 		int n = this.feld[x][y];
 		return (n != 0 ? n + "" : " ");
 	}
 	
+	// Aufgabe 9-4-(b)
+	/**
+	 * Wandelt eine Sudoku Belegung in ein String um. 
+	 * Ausgabe z.B. über System.out.println(mySudoku.toString());
+	 */
 	public String toString() {
 		String horizontalborder = "-------------------------\n";
 		String board = "";
@@ -394,5 +355,15 @@ public class Sudoku {
 		Sudoku mySudoku = new Sudoku(5000);		
  		mySudoku.hide(50);
 		System.out.println(mySudoku);
+//		Sudoku mySudoku = new Sudoku(100000);	
+//		Sudoku mySudoku = new Sudoku();
+//		mySudoku.randomPermutation(10000000);
+//		mySudoku.transpose();
+//		mySudoku.permutateStack();
+//		mySudoku.permutateBand();	
+//		mySudoku.permutateBand(1,2);
+//		mySudoku.permutateStack(1,2);	
+//		mySudoku.permutateColumns(0,1);	
+//		mySudoku.permutateRows(3, 4);
 	}
 }
