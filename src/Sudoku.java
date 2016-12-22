@@ -60,19 +60,18 @@ public class Sudoku {
 	 */
 	private int[] randomRow(){
 		// ruft die nächste Methode aufm die ein Random Array mit 9 Werten erstellt
-		return randomArray(9,1);
+		return randomArray(9);
 		
 	}
 	/**
 	 * Hilfsmethode, erzeugt ein randomArray der Größe size mit Randomwerten
 	 * Hierbei sind Randomwerte lückenlos, 
-	 * also bei (4,1) 4,2,1,3 aber nicht 4,0,1,2
+	 * also bei (4) 4,2,1,3
 	 * @param size			Größe des Random-Arrays
-	 * @param startValue	Startwert, z.B. 0 oder 1
 	 * @return				Array mit Randomwerten der Größe size
 	 */
-	private int[] randomArray(int size, int startValue){
-		// Index Array n Randomzahlen wird zunächst mit n Zahlen ab Startwert aufgefüllt und 
+	private int[] randomArray(int size){
+		// Index Array n Randomzahlen wird zunächst mit n Zahlen aufgefüllt und 
 		// im weiteren Schritt durch eine hohe Anzahl von Vertauschungen randomisiert
 		int[] randArray = new int[size];
 		// Indizes der zu vertauschenden Werte
@@ -82,14 +81,14 @@ public class Sudoku {
 		Random randomAnzahlSwap = new Random();
 		
 		// Initialisiere das Array mit den Zahlen 0..size-1
-		for (int i=0; i<size; i++){randArray[i]=i+startValue;}
+		for (int i=0; i<9; i++){randArray[i]=i+1;}
 		
-		// führe bis zu 20000 zufällige Vertauschungen im obigen Array durch
+		// führe bis zu 5000 zufällige Vertauschungen im obigen Array durch
 		int i1;
 		int i2;
 		int temp;
 		
-		for (int i = 0; i < randomAnzahlSwap.nextInt(20000); i++ ){
+		for (int i = 0; i < randomAnzahlSwap.nextInt(5000); i++ ){
 			// erzeuge zwei zufällige Indizes i1 und i2
 			i1 = randomIndex1.nextInt(size);
 			i2 = randomIndex2.nextInt(size);
@@ -342,13 +341,18 @@ public class Sudoku {
 	 * @param 	numberOfHides Anzahl Leerstellen
 	 * @return	String Darstellung des Susoku
 	 */
-	public String hide(int numberOfHides){
-		int[] hideIndex = randomArray(81,0);
+	public void hide(int numberOfHides){
+		int counter = 0;
+		Random r = new Random();
+		int position;
 		// fülle die Stellen der Random Indizes mit 0
-		for (int i=0; i<numberOfHides;i++ ){
-			this.feld[hideIndex[i]%9][hideIndex[i]/9]  = 0;
+		while (counter != numberOfHides){
+			position = r.nextInt(81); // aus einer Zahl lässt sich mit / und % die Koord. berechnen
+			if ( this.feld[position/9][position%9] != 0){
+				this.feld[position/9][position%9] = 0;
+				counter++;
+			}	
 		}
-		return this.toString();
 	}
 	
 	public static void main(String[] args) {
