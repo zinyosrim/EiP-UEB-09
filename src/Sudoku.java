@@ -345,6 +345,10 @@ public class Sudoku {
 		int counter = 0;
 		Random r = new Random();
 		int position;
+		if (numberOfHides >81){
+			System.out.println("Es gibt nur 81 Felder");
+			numberOfHides = 81;
+		}
 		// fülle die Stellen der Random Indizes mit 0
 		while (counter != numberOfHides){
 			position = r.nextInt(81); // aus einer Zahl lässt sich mit / und % die Koord. berechnen
@@ -353,6 +357,7 @@ public class Sudoku {
 				counter++;
 			}	
 		}
+		
 	}
 	
 	public static void main(String[] args) {
